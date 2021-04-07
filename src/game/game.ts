@@ -1,12 +1,15 @@
-import { Board } from "./board";
-import { Offset, Position } from "./position";
-import { BoardSize } from "./board-size";
+import { Board } from './board';
+import { Offset, Position } from './position';
+import { BoardSize } from './board-size';
 
 export class Game extends Board {
   protected state = GameState.playing;
   protected numRevealed = 0;
 
-  constructor(size: BoardSize = BoardSize.small, protected pos: Position = { x: 0, y: 0 }) {
+  constructor(
+    size: BoardSize = BoardSize.small,
+    protected pos: Position = { x: 0, y: 0 }
+  ) {
     super(size);
   }
 
@@ -31,7 +34,7 @@ export class Game extends Board {
 
     const newPos = {
       x: this.pos.x + o.x,
-      y: this.pos.y + o.y
+      y: this.pos.y + o.y,
     };
 
     if (!this.isInside(newPos)) {
@@ -72,11 +75,12 @@ export class Game extends Board {
   }
 
   private isInside(pos: Position): boolean {
-    return pos.x >= 0 && pos.x < this.size &&
-      pos.y >= 0 && pos.y < this.size;
+    return pos.x >= 0 && pos.x < this.size && pos.y >= 0 && pos.y < this.size;
   }
 }
 
 enum GameState {
-  lost, won, playing
+  lost,
+  won,
+  playing,
 }

@@ -1,5 +1,7 @@
-import Discord from "discord.js";
+require('dotenv').config();
+import { GameBot } from '@bot/game-bot';
+import { env } from 'process';
 
-const client = new Discord.Client();
+//bot link https://discord.com/oauth2/authorize?client_id=829406598513426493&scope=bot&permissions=2147998784
 
-console.log("Hello World");
+new GameBot(env.token);

@@ -1,7 +1,7 @@
 export enum BoardSize {
   small = 10,
   medium = 20,
-  big = 30
+  big = 30,
 }
 
 export class BoardSizeUtil {
@@ -16,4 +16,3 @@ export class BoardSizeUtil {
     }
   }
 }
-
