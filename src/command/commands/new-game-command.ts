@@ -1,8 +1,8 @@
 import { GameCommand } from '../game-command';
 import { GameAction, NewGameAction } from '@action/index';
-import { BoardSize } from '@game/board-size';
+import { BoardSizeVariant } from '@game/board-size';
 
-const defaultSize = BoardSize.medium;
+const defaultSize = BoardSizeVariant.medium;
 
 @GameCommand.Command
 class NewGameCommand extends GameCommand {
@@ -10,14 +10,14 @@ class NewGameCommand extends GameCommand {
     super(/^new\s*$|^new\s*(small|medium|big)\s*$/);
   }
 
-  private static getBoardSize(size: string | undefined): BoardSize {
+  private static getBoardSize(size: string | undefined): BoardSizeVariant {
     switch (size) {
       case 'small':
-        return BoardSize.small;
+        return BoardSizeVariant.small;
       case 'medium':
-        return BoardSize.medium;
+        return BoardSizeVariant.medium;
       case 'big':
-        return BoardSize.big;
+        return BoardSizeVariant.big;
       default:
         return defaultSize;
     }

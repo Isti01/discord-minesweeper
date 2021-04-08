@@ -7,12 +7,13 @@ import '@command/commands'; // To create command the classes and run the decorat
 const defaultPrefix = '$';
 
 export class Bot {
+  protected login: Promise<any>;
   protected readonly bot = new Client();
   protected states = new Map<string, ChannelState>();
 
   public constructor(token?: string) {
     this.listen();
-    this.bot.login(token).then(() => console.log('Logged In'));
+    this.login = this.bot.login(token).then(() => console.log('Logged In'));
   }
 
   protected listen() {

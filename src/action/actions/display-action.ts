@@ -11,8 +11,7 @@ export class DisplayAction extends GameAction {
     }
     game = props.state.game as Game;
 
-    const attachment = new MessageAttachment(await gameToImage(game));
-
-    return props.channel.send('\u200B', attachment);
+    const attachment = await gameToImage(game);
+    return props.channel.send('\u200B', new MessageAttachment(attachment));
   }
 }

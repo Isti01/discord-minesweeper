@@ -1,14 +1,16 @@
 import { Cell } from './cell';
 import { Position } from './position';
-import { BoardSize, BoardSizeUtil } from './board-size';
+import { BoardSize, BoardSizeUtil, BoardSizeVariant } from './board-size';
 
 export class Board {
   protected cells: Cell[][];
   protected readonly nodesToReveal: number;
   protected readonly bombAmount: number;
+  protected readonly size: BoardSize;
 
-  public constructor(protected readonly size: BoardSize) {
-    this.bombAmount = BoardSizeUtil.getBombAmount(this.size);
+  public constructor(sizeVariant: BoardSizeVariant) {
+    this.bombAmount = BoardSizeUtil.getBombAmount(sizeVariant);
+    this.size = BoardSizeUtil.getBoardSize(sizeVariant);
 
     this.cells = this.generateCells();
     this.nodesToReveal = this.cells.length - this.bombAmount;
@@ -16,8 +18,8 @@ export class Board {
   }
 
   private static shuffleArray(array: Cell[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * array.length);
+    for (let i = array.length - 1; i >= 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
       const temp = array[i];
       array[i] = array[j];
       array[j] = temp;
@@ -30,20 +32,26 @@ export class Board {
   }
 
   protected isInside(x: number, y: number): boolean {
-    return x >= 0 && x < this.size && y >= 0 && y < this.size;
+    return x >= 0 && x < this.size.width && y >= 0 && y < this.size.height;
   }
 
   private generateCells(): Cell[][] {
-    const array: Cell[] = Array.from({ length: this.size ** 2 }, (_, i) => ({
-      revealed: false,
-      bombsAround: 0,
-      flagged: false,
-      bomb: i < this.bombAmount,
-    }));
+    const array: Cell[] = Array.from(
+      { length: this.size.width * this.size.height },
+      (_, i) => ({
+        revealed: false,
+        bombsAround: 0,
+        flagged: false,
+        bomb: i < this.bombAmount,
+      })
+    );
 
     Board.shuffleArray(array);
 
-    const cells = Array.from({ length: this.size }, () => new Array(this.size));
+    const cells = Array.from(
+      { length: this.size.width },
+      () => new Array(this.size.height)
+    );
 
     for (let i = 0; i < array.length; i++) {
       const pos = this.indexToPos(i);
@@ -55,14 +63,14 @@ export class Board {
 
   private indexToPos(index: number): Position {
     return {
-      x: index % this.size,
-      y: Math.floor(index / this.size),
+      x: index % this.size.width,
+      y: Math.floor(index / this.size.width),
     };
   }
 
   private calculateBombsAround() {
-    for (let x = 0; x < this.size; x++) {
-      for (let y = 0; y < this.size; y++) {
+    for (let x = 0; x < this.size.width; x++) {
+      for (let y = 0; y < this.size.height; y++) {
         if (this.cells[x][y].bomb) {
           this.markFieldsAround(x, y);
         }

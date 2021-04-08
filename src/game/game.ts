@@ -1,6 +1,6 @@
 import { Board } from './board';
 import { Offset, Position } from './position';
-import { BoardSize } from './board-size';
+import { BoardSize, BoardSizeVariant } from './board-size';
 import { Cell, CellUtil } from '@game/cell';
 import { deepClone } from '@util/deep-clone';
 
@@ -9,7 +9,7 @@ export class Game extends Board {
   protected numRevealed = 0;
 
   constructor(
-    size: BoardSize = BoardSize.small,
+    size: BoardSizeVariant = BoardSizeVariant.small,
     protected pos: Position = { x: 0, y: 0 }
   ) {
     super(size);
@@ -19,6 +19,10 @@ export class Game extends Board {
     return this.cells.map((row) =>
       row.map((cell) => CellUtil.displayCell(cell))
     );
+  }
+
+  public get boardSize(): BoardSize {
+    return { ...this.size };
   }
 
   public get board(): Cell[][] {
