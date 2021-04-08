@@ -1,13 +1,13 @@
-import { GameCommand } from '../index';
-import { DisplayAction, GameAction } from '@action/index';
+import { BotCommand } from '../index';
+import { DisplayAction, BotAction } from '@action/index';
 
-@GameCommand.Command
-class DisplayCommand extends GameCommand {
+@BotCommand.Command
+class DisplayCommand extends BotCommand {
   constructor() {
     super(/show\s*/);
   }
 
-  protected process(args: RegExpMatchArray): GameAction {
+  protected process(args: RegExpMatchArray): BotAction {
     return new DisplayAction();
   }
 }

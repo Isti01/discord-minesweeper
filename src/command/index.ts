@@ -1,1 +1,1 @@
-export * from './game-command';
+export * from './bot-command';

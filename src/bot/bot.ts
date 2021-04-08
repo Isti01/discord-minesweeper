@@ -1,7 +1,7 @@
 import { Client, TextChannel, User } from 'discord.js';
 import { ChannelState } from '@bot/channel-state';
-import { gameCommands } from '@command/index';
-import { GameAction, MessageAction } from '@action/index';
+import { botCommands } from '@command/index';
+import { BotAction, MessageAction } from '@action/index';
 import '@command/commands'; // To create command the classes and run the decorators
 
 const defaultPrefix = '$';
@@ -32,7 +32,7 @@ export class Bot {
   }
 
   protected processAction(
-    action: GameAction,
+    action: BotAction,
     channel: TextChannel,
     author: User
   ) {
@@ -45,8 +45,8 @@ export class Bot {
     return action.execute({ channel, author, state });
   }
 
-  protected processCommand(commandText: string): GameAction {
-    for (const command of gameCommands) {
+  protected processCommand(commandText: string): BotAction {
+    for (const command of botCommands) {
       const action = command.processCommand(commandText);
 
       if (action !== null) return action;

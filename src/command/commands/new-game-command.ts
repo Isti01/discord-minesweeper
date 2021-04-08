@@ -1,11 +1,11 @@
-import { GameCommand } from '../game-command';
-import { GameAction, NewGameAction } from '@action/index';
+import { BotCommand } from '../bot-command';
+import { BotAction, NewGameAction } from '@action/index';
 import { BoardSizeVariant } from '@game/board-size';
 
 const defaultSize = BoardSizeVariant.medium;
 
-@GameCommand.Command
-class NewGameCommand extends GameCommand {
+@BotCommand.Command
+class NewGameCommand extends BotCommand {
   constructor() {
     super(/^new\s*$|^new\s*(small|medium|big)\s*$/);
   }
@@ -23,7 +23,7 @@ class NewGameCommand extends GameCommand {
     }
   }
 
-  protected process(args: RegExpMatchArray): GameAction {
+  protected process(args: RegExpMatchArray): BotAction {
     return new NewGameAction(NewGameCommand.getBoardSize(args[1]));
   }
 }

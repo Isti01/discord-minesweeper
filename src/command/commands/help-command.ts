@@ -1,13 +1,13 @@
-import { GameCommand } from '../index';
-import { GameAction, MessageAction } from '@action/index';
+import { BotCommand } from '../index';
+import { BotAction, MessageAction } from '@action/index';
 
-@GameCommand.Command
-class HelpCommand extends GameCommand {
+@BotCommand.Command
+class HelpCommand extends BotCommand {
   constructor() {
     super(/^help\s*$/);
   }
 
-  protected process(args: RegExpMatchArray): GameAction {
+  protected process(args: RegExpMatchArray): BotAction {
     return new MessageAction('help //todo lol');
   }
 }

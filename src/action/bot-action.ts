@@ -1,12 +1,12 @@
 import { MessageEmbed, TextChannel, User } from 'discord.js';
 import { ChannelState } from '@bot/channel-state';
 
-export abstract class GameAction {
-  public abstract execute(props: GameActionProps): Promise<any>;
+export abstract class BotAction {
+  public abstract execute(props: BotActionProps): Promise<any>;
 
   protected sendMessage(
     text: string,
-    channel: GameActionChannel
+    channel: BotActionChannel
   ): Promise<any> {
     return channel.send(
       new MessageEmbed({
@@ -16,10 +16,10 @@ export abstract class GameAction {
   }
 }
 
-export type GameActionChannel = TextChannel;
+export type BotActionChannel = TextChannel;
 
-export interface GameActionProps {
-  channel: GameActionChannel;
+export interface BotActionProps {
+  channel: BotActionChannel;
   author: User;
   state: ChannelState;
 }
