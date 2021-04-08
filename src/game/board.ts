@@ -3,7 +3,7 @@ import { Position } from './position';
 import { BoardSize, BoardSizeUtil } from './board-size';
 
 export class Board {
-  protected cells: Cell[];
+  protected cells: Cell[][];
   protected readonly nodesToReveal: number;
   protected readonly bombAmount: number;
 
@@ -25,10 +25,15 @@ export class Board {
   }
 
   protected getNode(pos: Position): Cell | undefined {
-    return this.cells[this.posToIndex(pos)];
+    if (!this.isInside(pos)) return;
+    return this.cells[pos.x][pos.y];
   }
 
-  private generateCells(): Cell[] {
+  protected isInside(pos: Position): boolean {
+    return pos.x >= 0 && pos.x < this.size && pos.y >= 0 && pos.y < this.size;
+  }
+
+  private generateCells(): Cell[][] {
     const array: Cell[] = Array.from({ length: this.size ** 2 }, (_, i) => ({
       revealed: false,
       bombsAround: 0,
@@ -38,7 +43,14 @@ export class Board {
 
     Board.shuffleArray(array);
 
-    return array;
+    const cells = Array(this.size).fill(Array(this.size));
+
+    for (let i = 0; i < array.length; i++) {
+      const pos = this.indexToPos(i);
+      cells[pos.x][pos.y] = array[i];
+    }
+
+    return cells;
   }
 
   private indexToPos(index: number): Position {
@@ -48,19 +60,11 @@ export class Board {
     };
   }
 
-  private posToIndex(pos: Position): number {
-    return pos.x + pos.y * this.size;
-  }
-
-  private coordsToIndex(x: number, y: number): number {
-    return x + y * this.size;
-  }
-
   private calculateBombsAround() {
     const length = this.cells.length;
     for (let i = 0; i < length; i++) {
-      const element = this.cells[i];
-      if (element.bomb) {
+      const element = this.getNode(this.indexToPos(i));
+      if (element?.bomb) {
         this.markFieldsAround(this.indexToPos(i));
       }
     }
@@ -71,8 +75,7 @@ export class Board {
       for (let y = -1; y <= 1; y++) {
         if (x === 0 && y === 0) continue;
 
-        const currentIndex = this.coordsToIndex(x + pos.x, y + pos.y);
-        const cell: Cell | undefined = this.cells[currentIndex];
+        const cell = this.getNode({ x: x + pos.x, y: y + pos.y });
         if (cell !== undefined) {
           cell.bombsAround++;
         }

@@ -1,6 +1,8 @@
 import { Board } from './board';
 import { Offset, Position } from './position';
 import { BoardSize } from './board-size';
+import { Cell, CellUtil } from '@game/cell';
+import { deepClone } from '../util/deep-clone';
 
 export class Game extends Board {
   protected state = GameState.playing;
@@ -11,6 +13,16 @@ export class Game extends Board {
     protected pos: Position = { x: 0, y: 0 }
   ) {
     super(size);
+  }
+
+  public get boardText(): string[][] {
+    return this.cells.map((row) =>
+      row.map((cell) => CellUtil.displayCell(cell))
+    );
+  }
+
+  public get board(): Cell[][] {
+    return deepClone(this.cells);
   }
 
   public get position(): Position {
@@ -72,10 +84,6 @@ export class Game extends Board {
 
     node.flagged = !node.flagged;
     return true;
-  }
-
-  private isInside(pos: Position): boolean {
-    return pos.x >= 0 && pos.x < this.size && pos.y >= 0 && pos.y < this.size;
   }
 }
 

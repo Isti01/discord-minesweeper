@@ -6,6 +6,7 @@ export abstract class GameCommand {
   protected constructor(protected readonly pattern: RegExp | string) {}
 
   static Command<T extends GameCommand>(target: new () => T) {
+    console.log('Loaded Command', target);
     gameCommands.push(new target());
   }
 

@@ -1,7 +1,5 @@
-import { GameAction } from '@bot/game-action/game-action';
+import { GameAction, GameActionProps } from '@bot/game-action/game-action';
 import { BoardSize } from '@game/board-size';
-import { TextChannel, User } from 'discord.js';
-import { ChannelState } from '@bot/channel-state';
 import { Game } from '@game/game';
 
 export class NewGameAction extends GameAction {
@@ -9,13 +7,9 @@ export class NewGameAction extends GameAction {
     super();
   }
 
-  async execute(
-    channel: TextChannel,
-    author: User,
-    game: ChannelState
-  ): Promise<any> {
-    game.game = new Game(this.size);
+  async execute({ channel, state }: GameActionProps): Promise<any> {
+    state.game = new Game(this.size);
 
-    return channel.send({ content: 'The New Game Was Created Successfully' });
+    return this.sendMessage('The New Game Was Created Successfully', channel);
   }
 }
