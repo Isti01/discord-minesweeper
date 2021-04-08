@@ -1,7 +1,6 @@
 import { GameCommand } from '../game-command';
-import { GameAction } from '@bot/game-action/game-action';
+import { GameAction, NewGameAction } from '@action/index';
 import { BoardSize } from '@game/board-size';
-import { NewGameAction } from '@bot/game-action';
 
 const defaultSize = BoardSize.medium;
 

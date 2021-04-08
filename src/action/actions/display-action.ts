@@ -1,4 +1,4 @@
-import { GameAction, GameActionProps, NoGameAction } from '@bot/game-action';
+import { GameAction, GameActionProps, NoGameAction } from '../index';
 import { gameToImage } from '@util/game-to-image';
 import { Game } from '@game/game';
 import { MessageAttachment } from 'discord.js';

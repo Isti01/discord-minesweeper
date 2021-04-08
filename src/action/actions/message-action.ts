@@ -1,4 +1,4 @@
-import { GameAction, GameActionProps } from '@bot/game-action/game-action';
+import { GameAction, GameActionProps } from '../game-action';
 
 export class MessageAction extends GameAction {
   constructor(private readonly message: string) {

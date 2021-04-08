@@ -1,9 +1,8 @@
 import { Client, TextChannel, User } from 'discord.js';
-import { GameAction } from '@bot/game-action/game-action';
 import { ChannelState } from '@bot/channel-state';
-import { gameCommands } from '@bot/game-command';
-import { MessageAction } from '@bot/game-action';
-import './game-command/commands'; // To create command the classes and run the decorators
+import { gameCommands } from '@command/index';
+import { GameAction, MessageAction } from '@action/index';
+import '@command/commands'; // To create command the classes and run the decorators
 
 const defaultPrefix = '$';
 

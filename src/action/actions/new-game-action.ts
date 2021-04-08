@@ -1,4 +1,4 @@
-import { GameAction, GameActionProps } from '@bot/game-action/game-action';
+import { GameAction, GameActionProps } from '../game-action';
 import { BoardSize } from '@game/board-size';
 import { Game } from '@game/game';
 

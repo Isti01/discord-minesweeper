@@ -1,4 +1,4 @@
-import { GameAction } from '@bot/game-action';
+import { GameAction } from '@action/index';
 
 export const gameCommands: GameCommand[] = [];
 

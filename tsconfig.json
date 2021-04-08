@@ -54,14 +54,17 @@
     "baseUrl": "./src",
     /* Base directory to resolve non-absolute module names. */
     "paths": {
-      "@game/*": [
-        "game/*"
+      "@action/*": [
+        "action/*"
       ],
       "@bot/*": [
         "bot/*"
       ],
-      "@actions/*": [
-        "bot/game-action/*"
+      "@command/*": [
+        "command/*"
+      ],
+      "@game/*": [
+        "game/*"
       ],
       "@util/*": [
         "util/*"

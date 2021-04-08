@@ -1,4 +1,4 @@
-import { GameAction, GameActionProps } from '@bot/game-action';
+import { GameAction, GameActionProps } from '../index';
 
 export class NoGameAction extends GameAction {
   execute({ channel }: GameActionProps): Promise<any> {

@@ -1,5 +1,5 @@
-import { GameCommand } from '@bot/game-command';
-import { DisplayAction, GameAction } from '@bot/game-action';
+import { GameCommand } from '../index';
+import { DisplayAction, GameAction } from '@action/index';
 
 @GameCommand.Command
 class DisplayCommand extends GameCommand {

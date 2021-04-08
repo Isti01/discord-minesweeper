@@ -1,6 +1,5 @@
-import { GameCommand } from '@bot/game-command';
-import { GameAction } from '@bot/game-action/game-action';
-import { MessageAction } from '@bot/game-action/actions/message-action';
+import { GameCommand } from '../index';
+import { GameAction, MessageAction } from '@action/index';
 
 @GameCommand.Command
 class HelpCommand extends GameCommand {
