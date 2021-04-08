@@ -1,13 +1,17 @@
 import { Client, TextChannel, User } from 'discord.js';
 import { GameAction } from '@bot/game-action/game-action';
+import { ChannelState } from '@bot/channel-state';
+import { gameCommands } from '@bot/game-command';
+import { MessageAction } from '@bot/game-action';
+import './game-command/commands'; // To create command the classes and run the decorators
 
 const defaultPrefix = '$';
 
-export abstract class Bot {
+export class Bot {
   protected readonly bot = new Client();
-  protected states = new Map<string, { prefix?: string }>();
+  protected states = new Map<string, ChannelState>();
 
-  protected constructor(token?: string) {
+  public constructor(token?: string) {
     this.listen();
     this.bot.login(token).then(() => console.log('Logged In'));
   }
@@ -27,11 +31,27 @@ export abstract class Bot {
     });
   }
 
-  protected abstract processCommand(commandText: string): GameAction;
-
-  protected abstract processAction(
+  protected processAction(
     action: GameAction,
     channel: TextChannel,
     author: User
-  ): Promise<void>;
+  ) {
+    let state: ChannelState | undefined = this.states.get(channel.id);
+    if (state === undefined) {
+      state = {};
+      this.states.set(channel.id, state);
+    }
+
+    return action.execute({ channel, author, state });
+  }
+
+  protected processCommand(commandText: string): GameAction {
+    for (const command of gameCommands) {
+      const action = command.processCommand(commandText);
+
+      if (action !== null) return action;
+    }
+
+    return new MessageAction('Command Not Found');
+  }
 }

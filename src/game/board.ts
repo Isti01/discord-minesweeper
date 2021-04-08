@@ -17,7 +17,7 @@ export class Board {
 
   private static shuffleArray(array: Cell[]) {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(Math.random() * array.length);
       const temp = array[i];
       array[i] = array[j];
       array[j] = temp;
@@ -25,12 +25,12 @@ export class Board {
   }
 
   protected getNode(pos: Position): Cell | undefined {
-    if (!this.isInside(pos)) return;
+    if (!this.isInside(pos.x, pos.y)) return;
     return this.cells[pos.x][pos.y];
   }
 
-  protected isInside(pos: Position): boolean {
-    return pos.x >= 0 && pos.x < this.size && pos.y >= 0 && pos.y < this.size;
+  protected isInside(x: number, y: number): boolean {
+    return x >= 0 && x < this.size && y >= 0 && y < this.size;
   }
 
   private generateCells(): Cell[][] {
@@ -43,7 +43,7 @@ export class Board {
 
     Board.shuffleArray(array);
 
-    const cells = Array(this.size).fill(Array(this.size));
+    const cells = Array.from({ length: this.size }, () => new Array(this.size));
 
     for (let i = 0; i < array.length; i++) {
       const pos = this.indexToPos(i);
@@ -61,23 +61,24 @@ export class Board {
   }
 
   private calculateBombsAround() {
-    const length = this.cells.length;
-    for (let i = 0; i < length; i++) {
-      const element = this.getNode(this.indexToPos(i));
-      if (element?.bomb) {
-        this.markFieldsAround(this.indexToPos(i));
+    for (let x = 0; x < this.size; x++) {
+      for (let y = 0; y < this.size; y++) {
+        if (this.cells[x][y].bomb) {
+          this.markFieldsAround(x, y);
+        }
       }
     }
   }
 
-  private markFieldsAround(pos: Position) {
+  private markFieldsAround(posX: number, posY: number) {
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
         if (x === 0 && y === 0) continue;
 
-        const cell = this.getNode({ x: x + pos.x, y: y + pos.y });
-        if (cell !== undefined) {
-          cell.bombsAround++;
+        const currentX = x + posX;
+        const currentY = y + posY;
+        if (this.isInside(currentX, currentY)) {
+          this.cells[currentX][currentY].bombsAround++;
         }
       }
     }

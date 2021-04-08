@@ -1,18 +1,11 @@
 export enum BoardSize {
-  small = 10,
-  medium = 20,
-  big = 30,
+  small = 8,
+  medium = 10,
+  big = 12,
 }
 
 export class BoardSizeUtil {
   public static getBombAmount(size: BoardSize): number {
-    switch (size) {
-      case BoardSize.small:
-        return 10;
-      case BoardSize.medium:
-        return 40;
-      case BoardSize.big:
-        return 90;
-    }
+    return Math.round(size ** 2 / 5);
   }
 }
