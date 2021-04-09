@@ -1,13 +1,12 @@
 const cheerio = require('cheerio');
 const path = require('path');
 const fs = require('fs/promises');
-
+const optimize = require('svgo').optimize;
 const dirPath = './assets';
 
 async function processAssets(file) {
-  let svg = cheerio.load(await fs.readFile(path.join(dirPath, file), 'utf-8'), {
-    xml: true,
-  });
+  const svgText = await fs.readFile(path.join(dirPath, file), 'utf-8');
+  let svg = cheerio.load(optimize(svgText).data, { xml: true });
 
   svg('svg').removeAttr('width').removeAttr('height');
 
@@ -22,4 +21,4 @@ fs.readdir(dirPath)
   .then((svgs) => svgs.reduce((prev, curr) => ({ ...prev, ...curr }), {}))
   .then((json) => ({ sprites: json }))
   .then((json) => fs.writeFile('./out/config.json', JSON.stringify(json)))
-  .then(() => console.log( 'finished :)'));
+  .then(() => console.log('finished :)'));

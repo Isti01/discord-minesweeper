@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "*"
+    "cheerio": "*",
+    "svgo": "^2.3.0"
   }
 }
