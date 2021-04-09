@@ -5,13 +5,19 @@ import { BoardSize } from '@game/board-size';
 export const gameToImage = async (game: Game): Promise<Buffer> => {
   const board = game.boardSvg;
   const boardSize = game.boardSize;
+
   const padding = 8;
   const squareSize = 32;
+
   const svgWidth = (squareSize + padding) * boardSize.width + padding;
   const svgHeight = (squareSize + padding) * boardSize.height + padding;
 
   const svgContent = doLayout(board, squareSize, padding, boardSize);
-  const svg = `<svg width='${svgWidth}' height='${svgHeight}' viewBox='${-padding} ${-padding} ${svgWidth} ${svgHeight}'>${svgContent}</svg>`;
+
+  const viewBox = `viewBox='${-padding} ${-padding} ${svgWidth}`
+  const position = `width='${svgWidth}' height='${svgHeight}'`
+
+  const svg = `<svg ${position} ${viewBox} ${svgHeight}'>${svgContent}</svg>`;
 
   return sharp(Buffer.from(svg)).png().toBuffer();
 };

@@ -2,7 +2,7 @@ import { Client, TextChannel, User } from 'discord.js';
 import { ChannelState } from '@bot/channel-state';
 import { botCommands } from '@command/index';
 import { BotAction, MessageAction } from '@action/index';
-import '@command/commands'; // To create command the classes and run the decorators
+import '@command/commands'; // To create the command classes and run the decorators
 
 const defaultPrefix = '$';
 

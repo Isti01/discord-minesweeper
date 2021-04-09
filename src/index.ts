@@ -1,4 +1,5 @@
 require('dotenv').config();
+import 'module-alias/register';
 import { Bot } from '@bot/bot';
 import { env } from 'process';
 
