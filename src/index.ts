@@ -1,5 +1,8 @@
+if (!process.argv.some((arg) => arg.includes('index.ts'))) {
+  // this should only run when the code is compiled to .js
+  require('module-alias/register');
+}
 require('dotenv').config();
-import 'module-alias/register';
 import { Bot } from '@bot/bot';
 import { env } from 'process';
 

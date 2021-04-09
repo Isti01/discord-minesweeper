@@ -4,10 +4,7 @@ import { ChannelState } from '@bot/channel-state';
 export abstract class BotAction {
   public abstract execute(props: BotActionProps): Promise<any>;
 
-  protected sendMessage(
-    text: string,
-    channel: BotActionChannel
-  ): Promise<any> {
+  protected sendMessage(text: string, channel: BotActionChannel): Promise<any> {
     return channel.send(
       new MessageEmbed({
         description: text,
