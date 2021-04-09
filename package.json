@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "start": "tsc && ts-node -r tsconfig-paths/register src/index.ts",
     "start-node": "tsc && node dist/index.js"
   },
   "author": "",

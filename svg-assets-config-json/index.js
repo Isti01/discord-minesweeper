@@ -6,11 +6,12 @@ const dirPath = './assets';
 
 async function processAssets(file) {
   const svgText = await fs.readFile(path.join(dirPath, file), 'utf-8');
-  let svg = cheerio.load(optimize(svgText).data, { xml: true });
+
+  let svg = cheerio.load(svgText, { xml: true });
 
   svg('svg').removeAttr('width').removeAttr('height');
 
-  const content = svg.xml().trim().substr('<svg'.length);
+  const content = optimize(svg.xml()).data.trim().substr('<svg'.length);
   const name = path.basename(file, '.svg');
 
   return { [name]: content };

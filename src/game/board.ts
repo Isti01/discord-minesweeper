@@ -81,8 +81,6 @@ export class Board {
   private markFieldsAround(posX: number, posY: number) {
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
-        if (x === 0 && y === 0) continue;
-
         const currentX = x + posX;
         const currentY = y + posY;
         if (this.isInside(currentX, currentY)) {
