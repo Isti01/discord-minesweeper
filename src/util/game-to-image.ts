@@ -14,10 +14,10 @@ export const gameToImage = async (game: Game): Promise<Buffer> => {
 
   const svgContent = doLayout(board, squareSize, padding, boardSize);
 
-  const viewBox = `viewBox='${-padding} ${-padding} ${svgWidth}`;
+  const viewBox = `viewBox='${-padding} ${-padding} ${svgWidth} ${svgHeight}'`;
   const position = `width='${svgWidth}' height='${svgHeight}'`;
 
-  const svg = `<svg ${position} ${viewBox} ${svgHeight}'>${svgContent}</svg>`;
+  const svg = `<svg ${position} ${viewBox}>${svgContent}</svg>`;
 
   return sharp(Buffer.from(svg)).png().toBuffer();
 };
