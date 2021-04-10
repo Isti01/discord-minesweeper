@@ -10,29 +10,35 @@ export interface Cell {
 }
 
 export class CellUtil {
-  public static displayCell(cell: Cell): string {
-    if (cell.flagged) return sprites.flagged;
-    // if (!cell.revealed) return sprites.unrevealed;
-    if (cell.bomb) return sprites.bomb;
+  public static displayCell(cell: Cell, selected?: boolean): string {
+    if (cell.flagged) {
+      return selected ? sprites.flagged_selected : sprites.flagged;
+    }
+    if (!cell.revealed) {
+      return selected ? sprites.unrevealed_selected : sprites.unrevealed;
+    }
+    if (cell.bomb) {
+      return selected ? sprites.bomb_selected : sprites.bomb;
+    }
     switch (cell.bombsAround) {
       case 1:
-        return sprites.one;
+        return selected ? sprites.one_selected : sprites.one;
       case 2:
-        return sprites.two;
+        return selected ? sprites.two_selected : sprites.two;
       case 3:
-        return sprites.three;
+        return selected ? sprites.three_selected : sprites.three;
       case 4:
-        return sprites.four;
+        return selected ? sprites.four_selected : sprites.four;
       case 5:
-        return sprites.five;
+        return selected ? sprites.five_selected : sprites.five;
       case 6:
-        return sprites.six;
+        return selected ? sprites.six_selected : sprites.six;
       case 7:
-        return sprites.seven;
+        return selected ? sprites.seven_selected : sprites.seven;
       case 8:
-        return sprites.eight;
+        return selected ? sprites.eight_selected : sprites.eight;
       default:
-        return sprites.zero;
+        return selected ? sprites.zero_selected : sprites.zero;
     }
   }
 }

@@ -16,8 +16,10 @@ export class Game extends Board {
   }
 
   public get boardSvg(): string[][] {
-    return this.cells.map((row) =>
-      row.map((cell) => CellUtil.displayCell(cell))
+    return this.cells.map((row, x) =>
+      row.map((cell, y) =>
+        CellUtil.displayCell(cell, this.pos.x == x && this.pos.y == y)
+      )
     );
   }
 
