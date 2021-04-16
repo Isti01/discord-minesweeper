@@ -1,8 +1,8 @@
-import { Game } from '@game/game';
 import { Message } from 'discord.js';
+import { DiscordGame } from '@game/discord-game';
 
 export interface ChannelState {
-  game?: Game;
+  game?: DiscordGame;
   prefix?: string;
   gameMessage?: Message;
 }

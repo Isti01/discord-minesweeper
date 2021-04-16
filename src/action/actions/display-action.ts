@@ -1,5 +1,5 @@
 import { BotAction, BotActionProps, NoGameAction } from '../index';
-import { Game } from '@game/game';
+import { DiscordGame } from '@game/discord-game';
 
 export class DisplayAction extends BotAction {
   async execute(props: BotActionProps): Promise<any> {
@@ -7,7 +7,7 @@ export class DisplayAction extends BotAction {
     if (!game) {
       return new NoGameAction().execute(props);
     }
-    game = props.state.game as Game;
+    game = props.state.game as DiscordGame;
 
     await props.state.gameMessage?.delete().catch(console.log);
 
