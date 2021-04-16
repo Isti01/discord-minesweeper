@@ -1,15 +1,16 @@
 import { BotAction, BotActionProps } from '../bot-action';
 import { BoardSizeVariant } from '@game/board-size';
 import { Game } from '@game/game';
+import { DisplayAction } from '@action/actions/display-action';
 
 export class NewGameAction extends BotAction {
   constructor(private readonly size: BoardSizeVariant) {
     super();
   }
 
-  async execute({ channel, state }: BotActionProps): Promise<any> {
-    state.game = new Game(this.size);
+  async execute(props: BotActionProps): Promise<any> {
+    props.state.game = new Game(this.size);
 
-    return this.sendMessage('The New Game Was Created Successfully', channel);
+    return new DisplayAction().execute(props);
   }
 }

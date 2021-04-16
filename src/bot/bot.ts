@@ -43,7 +43,8 @@ export class Bot {
     if (author.id === this.bot.user?.id) return;
 
     switch (emoji.name) {
-      case '➡': console.log('right');
+      case '➡':
+        console.log('right');
     }
 
     console.log(emoji.name, emoji.identifier);

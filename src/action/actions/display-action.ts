@@ -10,6 +10,10 @@ export class DisplayAction extends BotAction {
     game = props.state.game as Game;
 
     await props.state.gameMessage?.delete().catch(console.log);
-    return this.sendMessage('```\n' + game.boardText + '\n```', props.channel);
+
+    props.state.gameMessage = await this.sendMessage(
+      game.boardText,
+      props.channel
+    );
   }
 }

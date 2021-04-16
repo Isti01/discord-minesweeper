@@ -4,6 +4,12 @@ import { BoardSize, BoardSizeVariant } from './board-size';
 import { Cell, CellUtil } from '@game/cell';
 import { deepClone } from '@util/deep-clone';
 
+const abc = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+function padIndex(index: number, padding: number): string {
+  return String(index).padStart(padding);
+}
+
 export class Game extends Board {
   protected state = GameState.playing;
   protected numRevealed = 0;
@@ -16,12 +22,20 @@ export class Game extends Board {
   }
 
   public get boardText(): string {
-    const displayRow = (x: number) => (cell: Cell, y: number) =>
-      CellUtil.displayCell(cell, this.pos.x == x && this.pos.y == y);
+    const padding = Math.ceil(Math.log10(this.size.height));
 
-    return this.cells
-      .map((row, x) => row.map(displayRow(x)).join(' '))
-      .join('\n');
+    const displayCols = (row: Cell[], y: number) =>
+      `${padIndex(y, padding)}║ ` + row.map(displayRow(y)).join(' ');
+
+    const displayRow = (y: number) => (cell: Cell, x: number) => {
+      return CellUtil.displayCell(cell, this.pos.x == x && this.pos.y == y);
+    };
+    return (
+      '```\n' +
+      this.getHeader(padding) +
+      this.cells.map(displayCols).join('\n') +
+      '\n```'
+    );
   }
 
   public get boardSize(): BoardSize {
@@ -91,6 +105,13 @@ export class Game extends Board {
 
     node.flagged = !node.flagged;
     return true;
+  }
+
+  private getHeader(padding: number): string {
+    const width = this.size.width;
+    const letters = `${' '.repeat(padding)}║ ${abc.slice(0, width).join(' ')}`;
+    const border = `${'═'.repeat(padding)}╬${'═'.repeat(width * 2)}`;
+    return `${letters}\n${border}\n`;
   }
 }
 

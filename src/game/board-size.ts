@@ -14,8 +14,8 @@ export enum BoardSizeVariant {
 export class BoardSizeUtil {
   public static getBoardSize(size: BoardSizeVariant): BoardSize {
     return {
-      height: size,
-      width: Math.floor(WidthMultiplier * size),
+      width: size,
+      height: Math.floor(WidthMultiplier * size),
     };
   }
 

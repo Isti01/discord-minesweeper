@@ -28,7 +28,7 @@ export class Board {
 
   protected getNode(pos: Position): Cell | undefined {
     if (!this.isInside(pos.x, pos.y)) return;
-    return this.cells[pos.x][pos.y];
+    return this.cells[pos.y][pos.x];
   }
 
   protected isInside(x: number, y: number): boolean {
@@ -49,13 +49,13 @@ export class Board {
     Board.shuffleArray(array);
 
     const cells = Array.from(
-      { length: this.size.width },
-      () => new Array(this.size.height)
+      { length: this.size.height },
+      () => new Array(this.size.width)
     );
 
     for (let i = 0; i < array.length; i++) {
       const pos = this.indexToPos(i);
-      cells[pos.x][pos.y] = array[i];
+      cells[pos.y][pos.x] = array[i];
     }
 
     return cells;
@@ -71,7 +71,7 @@ export class Board {
   private calculateBombsAround() {
     for (let x = 0; x < this.size.width; x++) {
       for (let y = 0; y < this.size.height; y++) {
-        if (this.cells[x][y].bomb) {
+        if (this.cells[y][x].bomb) {
           this.markFieldsAround(x, y);
         }
       }
@@ -84,7 +84,7 @@ export class Board {
         const currentX = x + posX;
         const currentY = y + posY;
         if (this.isInside(currentX, currentY)) {
-          this.cells[currentX][currentY].bombsAround++;
+          this.cells[currentY][currentX].bombsAround++;
         }
       }
     }
