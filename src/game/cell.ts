@@ -1,5 +1,3 @@
-import config from '../config.json';
-
 export interface Cell {
   bomb: boolean;
   revealed: boolean;
