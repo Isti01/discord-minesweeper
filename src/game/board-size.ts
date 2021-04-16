@@ -6,9 +6,9 @@ export interface BoardSize {
 }
 
 export enum BoardSizeVariant {
-  small = 7,
-  medium = 8,
-  big = 9,
+  small = 10,
+  medium = 15,
+  big = 20,
 }
 
 export class BoardSizeUtil {

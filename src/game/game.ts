@@ -15,12 +15,13 @@ export class Game extends Board {
     super(size);
   }
 
-  public get boardSvg(): string[][] {
-    return this.cells.map((row, x) =>
-      row.map((cell, y) =>
-        CellUtil.displayCell(cell, this.pos.x == x && this.pos.y == y)
-      )
-    );
+  public get boardText(): string {
+    const displayRow = (x: number) => (cell: Cell, y: number) =>
+      CellUtil.displayCell(cell, this.pos.x == x && this.pos.y == y);
+
+    return this.cells
+      .map((row, x) => row.map(displayRow(x)).join(' '))
+      .join('\n');
   }
 
   public get boardSize(): BoardSize {

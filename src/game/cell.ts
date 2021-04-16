@@ -1,7 +1,5 @@
 import config from '../config.json';
 
-const { sprites } = config;
-
 export interface Cell {
   bomb: boolean;
   revealed: boolean;
@@ -11,34 +9,37 @@ export interface Cell {
 
 export class CellUtil {
   public static displayCell(cell: Cell, selected?: boolean): string {
+    if (selected) {
+      return '×';
+    }
     if (cell.flagged) {
-      return selected ? sprites.flagged_selected : sprites.flagged;
+      return '¡';
     }
     if (!cell.revealed) {
-      return selected ? sprites.unrevealed_selected : sprites.unrevealed;
+      return '■';
     }
     if (cell.bomb) {
-      return selected ? sprites.bomb_selected : sprites.bomb;
+      return '¤';
     }
     switch (cell.bombsAround) {
       case 1:
-        return selected ? sprites.one_selected : sprites.one;
+        return '1';
       case 2:
-        return selected ? sprites.two_selected : sprites.two;
+        return '2';
       case 3:
-        return selected ? sprites.three_selected : sprites.three;
+        return '3';
       case 4:
-        return selected ? sprites.four_selected : sprites.four;
+        return '4';
       case 5:
-        return selected ? sprites.five_selected : sprites.five;
+        return '5';
       case 6:
-        return selected ? sprites.six_selected : sprites.six;
+        return '6';
       case 7:
-        return selected ? sprites.seven_selected : sprites.seven;
+        return '7';
       case 8:
-        return selected ? sprites.eight_selected : sprites.eight;
+        return '8';
       default:
-        return selected ? sprites.zero_selected : sprites.zero;
+        return '0';
     }
   }
 }

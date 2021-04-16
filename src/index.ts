@@ -1,5 +1,5 @@
 if (!process.argv.some((arg) => arg.includes('index.ts'))) {
-  // this should only run when the code is compiled to .js
+  // this should only run when the code is compiled to .js, welcome to node.js
   require('module-alias/register');
 }
 require('dotenv').config();

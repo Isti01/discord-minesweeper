@@ -1,4 +1,11 @@
-import { Client, TextChannel, User } from 'discord.js';
+import {
+  Client,
+  Message,
+  MessageReaction,
+  PartialUser,
+  TextChannel,
+  User,
+} from 'discord.js';
 import { ChannelState } from '@bot/channel-state';
 import { botCommands } from '@command/index';
 import { BotAction, MessageAction } from '@action/index';
@@ -16,19 +23,38 @@ export class Bot {
     this.login = this.bot.login(token).then(() => console.log('Logged In'));
   }
 
+  protected async onMessage({ content, channel, author }: Message) {
+    if (author.id === this.bot.user?.id || !(channel instanceof TextChannel))
+      return;
+
+    const prefix = this.states.get(channel.id)?.prefix || defaultPrefix;
+    if (!content.startsWith(prefix)) return;
+
+    const command = content.substr(prefix.length).toLowerCase();
+    const action = this.processCommand(command);
+
+    return this.processAction(action, channel, author);
+  }
+
+  protected async onEmoji(
+    { emoji, message }: MessageReaction,
+    author: User | PartialUser
+  ) {
+    if (author.id === this.bot.user?.id) return;
+
+    switch (emoji.name) {
+      case '➡': console.log('right');
+    }
+
+    console.log(emoji.name, emoji.identifier);
+
+    console.log('On Emoji');
+  }
+
   protected listen() {
-    this.bot.on('message', async ({ content, channel, author }) => {
-      if (author.id === this.bot.user?.id || !(channel instanceof TextChannel))
-        return;
-
-      const prefix = this.states.get(channel.id)?.prefix || defaultPrefix;
-      if (!content.startsWith(prefix)) return;
-
-      const command = content.substr(prefix.length).toLowerCase();
-      const action = this.processCommand(command);
-
-      return this.processAction(action, channel, author);
-    });
+    this.bot.on('message', this.onMessage.bind(this));
+    this.bot.on('messageReactionAdd', this.onEmoji.bind(this));
+    this.bot.on('messageReactionRemove', this.onEmoji.bind(this));
   }
 
   protected processAction(
