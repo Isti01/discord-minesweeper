@@ -28,6 +28,7 @@
     "@bot": "dist/bot/",
     "@command": "dist/command/",
     "@game": "dist/game/",
+    "@reaction": "dist/reaction/",
     "@util": "dist/util/"
   }
 }

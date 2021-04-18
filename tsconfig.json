@@ -66,6 +66,9 @@
       "@game/*": [
         "game/*"
       ],
+      "@reaction/*": [
+        "reaction/*"
+      ],
       "@util/*": [
         "util/*"
       ]

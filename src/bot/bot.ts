@@ -1,15 +1,19 @@
 import {
   Client,
+  GuildEmoji,
   Message,
   MessageReaction,
   PartialUser,
+  ReactionEmoji,
   TextChannel,
   User,
 } from 'discord.js';
 import { ChannelState } from '@bot/channel-state';
 import { botCommands } from '@command/index';
-import { BotAction, MessageAction } from '@action/index';
+import { BotAction, MessageAction, NoopAction } from '@action/index';
+import { GameReaction } from '@reaction/index';
 import '@command/commands'; // To create the command classes and run the decorators
+import '@reaction/reactions'; // To create the reaction classes and run the decorators
 
 const defaultPrefix = '$';
 
@@ -40,22 +44,37 @@ export class Bot {
     { emoji, message }: MessageReaction,
     author: User | PartialUser
   ) {
-    if (author.id === this.bot.user?.id) return;
+    if (author.id == this.bot.user?.id) return;
 
-    switch (emoji.name) {
-      case '➡':
-        console.log('right');
-    }
+    const channel = message.channel;
+    if (!(channel instanceof TextChannel) || !(author instanceof User)) return;
 
-    console.log(emoji.name, emoji.identifier);
+    const state = this.states.get(channel.id);
+    if (!state || !state.game || !state.gameMessage) return;
 
-    console.log('On Emoji');
+    const action = this.processEmoji(emoji);
+
+    return action.execute({
+      state: state,
+      channel: channel,
+      author: author,
+    });
   }
 
   protected listen() {
     this.bot.on('message', this.onMessage.bind(this));
     this.bot.on('messageReactionAdd', this.onEmoji.bind(this));
     this.bot.on('messageReactionRemove', this.onEmoji.bind(this));
+  }
+
+  protected processEmoji(emoji: GuildEmoji | ReactionEmoji): BotAction {
+    for (const reaction of GameReaction.Reactions) {
+      if (reaction.matchesEmoji(emoji)) {
+        return reaction.process(emoji);
+      }
+    }
+
+    return new NoopAction();
   }
 
   protected processAction(
