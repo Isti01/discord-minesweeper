@@ -5,7 +5,7 @@ export const botCommands: BotCommand[] = [];
 export abstract class BotCommand {
   protected constructor(protected readonly pattern: RegExp | string) {}
 
-  static Command<T extends BotCommand>(target: new () => T) {
+  static Command(target: new () => BotCommand) {
     console.log('Loaded Command', target);
     botCommands.push(new target());
   }
