@@ -3,6 +3,7 @@ import { Offset, Position } from './position';
 import { BoardSize, BoardSizeVariant } from './board-size';
 import { Cell } from '@game/cell';
 import { deepClone } from '@util/deep-clone';
+import { clamp } from '@util/clamp';
 
 export class Game extends Board {
   protected state = GameState.playing;
@@ -39,20 +40,13 @@ export class Game extends Board {
     return this.state === GameState.playing;
   }
 
-  public move(o: Offset): boolean {
-    if (!this.playing) return false;
+  public move(offset: Offset) {
+    if (!this.playing) return;
 
-    const newPos = {
-      x: this.pos.x + o.x,
-      y: this.pos.y + o.y,
-    };
-
-    if (!this.isInside(newPos.x, newPos.y)) {
-      return false;
-    }
-
-    this.pos = newPos;
-    return true;
+    this.pos = this.clampPos({
+      x: this.pos.x + offset.x,
+      y: this.pos.y + offset.y,
+    });
   }
 
   public reveal(): boolean {
@@ -82,6 +76,13 @@ export class Game extends Board {
 
     node.flagged = !node.flagged;
     return true;
+  }
+
+  private clampPos(offset: Offset): Offset {
+    return {
+      x: clamp(0, this.size.width - 1, offset.x),
+      y: clamp(0, this.size.height - 1, offset.y),
+    };
   }
 }
 

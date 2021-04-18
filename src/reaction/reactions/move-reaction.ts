@@ -1,17 +1,17 @@
 import { GameReaction } from '@reaction/index';
 import { BotAction } from '@action/bot-action';
 import { GuildEmoji, ReactionEmoji } from 'discord.js';
-import { NoopAction } from '@action/actions';
+import { MoveAction } from '@action/actions/move-action';
 
 const Reactions: { [key: string]: BotAction } = {
-  ['⬅️']: new NoopAction(),
-  ['⏪']: new NoopAction(),
-  ['⬇️']: new NoopAction(),
-  ['⏬']: new NoopAction(),
-  ['⬆️']: new NoopAction(),
-  ['⏫']: new NoopAction(),
-  ['➡️']: new NoopAction(),
-  ['⏩']: new NoopAction(),
+  ['⬅️']: new MoveAction({ x: -1, y: 0 }),
+  ['⏪']: new MoveAction({ x: -3, y: 0 }),
+  ['⬇️']: new MoveAction({ x: 0, y: 1 }),
+  ['⏬']: new MoveAction({ x: 0, y: 3 }),
+  ['⬆️']: new MoveAction({ x: 0, y: -1 }),
+  ['⏫']: new MoveAction({ x: 0, y: -3 }),
+  ['➡️']: new MoveAction({ x: 1, y: 0 }),
+  ['⏩']: new MoveAction({ x: 3, y: 0 }),
 };
 
 @GameReaction.Reaction
