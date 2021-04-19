@@ -14,7 +14,9 @@ export abstract class GameReaction {
     return GameReaction.Reactions.flatMap((reaction) => reaction.emojis);
   }
 
-  abstract matchesEmoji(emoji: GuildEmoji | ReactionEmoji): boolean;
+  matchesEmoji(emoji: GuildEmoji | ReactionEmoji): boolean {
+    return this.emojis.includes(emoji.name);
+  }
 
   abstract process(emoji: GuildEmoji | ReactionEmoji): BotAction;
 }
