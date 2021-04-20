@@ -49,23 +49,35 @@ export class Game extends Board {
     });
   }
 
-  public reveal(): boolean {
-    if (!this.playing) return false;
-
-    const node = this.getNode(this.pos);
-    if (node === undefined || node.flagged) return false;
+  public revealAt(pos: Position) {
+    const node = this.getNode(pos);
+    if (node === undefined || node.flagged || node.revealed) return;
 
     node.revealed = true;
 
     if (node.bomb) {
       this.state = GameState.lost;
     } else {
+      if (node.bombsAround === 0) {
+        for (let x = -1; x <= 1; x++) {
+          for (let y = -1; y <= 1; y++) {
+            if (x === 0 && y === 0) continue;
+            this.revealAt({ x: pos.x + x, y: pos.y + y });
+          }
+        }
+      }
+
       this.numRevealed++;
       if (this.numRevealed === this.nodesToReveal) {
         this.state = GameState.won;
       }
     }
-    return true;
+  }
+
+  public reveal() {
+    if (!this.playing) return;
+
+    this.revealAt(this.pos);
   }
 
   public flag(): boolean {
