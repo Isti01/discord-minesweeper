@@ -10,10 +10,6 @@ export abstract class BotAction {
   ): Promise<Message> {
     return channel.send(new MessageEmbed({ description: text }));
   }
-
-  protected updateMessage(boardText: string, gameMessage: Message) {
-    return gameMessage.edit(new MessageEmbed({ description: boardText }));
-  }
 }
 
 export type BotActionChannel = TextChannel;

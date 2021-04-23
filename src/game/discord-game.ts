@@ -1,5 +1,6 @@
 import { Game } from '@game/game';
 import { Cell, CellUtil } from '@game/cell';
+import { MessageEmbed } from 'discord.js';
 
 const abc = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
@@ -8,7 +9,11 @@ function padIndex(index: number, padding: number): string {
 }
 
 export class DiscordGame extends Game {
-  public get boardText(): string {
+  public get gameEmbed(): MessageEmbed {
+    return new MessageEmbed().setDescription(this.boardText);
+  }
+
+  private get boardText(): string {
     const padding = Math.ceil(Math.log10(this.size.height));
 
     const displayCols = (row: Cell[], y: number) =>

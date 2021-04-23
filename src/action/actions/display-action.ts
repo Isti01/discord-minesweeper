@@ -4,6 +4,10 @@ import { Message } from 'discord.js';
 import { GameReaction } from '@reaction/game-reaction';
 
 export class DisplayAction extends BotAction {
+  private static addReactions(message: Message): Promise<any> {
+    return Promise.all(GameReaction.getEmojis().map(message.react));
+  }
+
   async execute(props: BotActionProps): Promise<any> {
     let game = props.state.game;
     if (!game) {
@@ -12,15 +16,9 @@ export class DisplayAction extends BotAction {
     game = props.state.game as DiscordGame;
 
     await props.state.gameMessage?.delete().catch(console.log);
-    const message = await this.sendMessage(game.boardText, props.channel);
+    const message = await props.channel.send(game.gameEmbed);
 
     props.state.gameMessage = message;
-    await this.addReactions(message);
-  }
-
-  private addReactions(message: Message): Promise<any> {
-    return Promise.all(
-      GameReaction.getEmojis().map((emoji) => message.react(emoji))
-    );
+    await DisplayAction.addReactions(message);
   }
 }
