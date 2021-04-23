@@ -1,18 +1,17 @@
-import { GameReaction } from '@reaction/index';
+import { GameReaction } from '@reaction/game-reaction';
 import { BotAction } from '@action/bot-action';
+import { StepSizeAction } from '@action/actions';
 import { GuildEmoji, ReactionEmoji } from 'discord.js';
-import { MoveAction } from '@action/actions';
 
 const Reactions: { [key: string]: BotAction } = {
-  ['⬅️']: new MoveAction({ x: -1, y: 0 }),
-  ['⬇️']: new MoveAction({ x: 0, y: 1 }),
-  ['⬆️']: new MoveAction({ x: 0, y: -1 }),
-  ['➡️']: new MoveAction({ x: 1, y: 0 }),
+  ['1️⃣']: new StepSizeAction(1),
+  ['2️⃣']: new StepSizeAction(2),
+  ['3️⃣']: new StepSizeAction(3),
 };
 
 @GameReaction.Reaction
-class MoveReaction extends GameReaction {
-  emojis = Object.keys(Reactions);
+export class StepSizeReaction extends GameReaction {
+  readonly emojis = Object.keys(Reactions);
 
   process(emoji: GuildEmoji | ReactionEmoji): BotAction {
     const action = Reactions[emoji.name];

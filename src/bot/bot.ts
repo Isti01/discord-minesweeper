@@ -84,7 +84,7 @@ export class Bot {
   ) {
     let state: ChannelState | undefined = this.states.get(channel.id);
     if (state === undefined) {
-      state = {};
+      state = { stepSize: 1 };
       this.states.set(channel.id, state);
     }
 

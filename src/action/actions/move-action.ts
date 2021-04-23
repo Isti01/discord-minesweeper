@@ -1,9 +1,9 @@
 import { BotAction, BotActionProps } from '@action/bot-action';
-import { Offset } from '@game/position';
+import { NormalizedOffset } from '@game/position';
 import { UpdateDisplayAction } from '@action/actions/update-display-action';
 
 export class MoveAction extends BotAction {
-  constructor(private readonly offset: Offset) {
+  constructor(private readonly normalizedOffset: NormalizedOffset) {
     super();
   }
 
@@ -11,7 +11,11 @@ export class MoveAction extends BotAction {
     const game = props.state.game;
     if (!game) return;
 
-    game.move(this.offset);
+    game.move({
+      x: this.normalizedOffset.x * props.state.stepSize,
+      y: this.normalizedOffset.y * props.state.stepSize,
+    });
+
     return new UpdateDisplayAction().execute(props);
   }
 }

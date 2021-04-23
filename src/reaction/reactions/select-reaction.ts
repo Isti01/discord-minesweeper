@@ -1,7 +1,7 @@
 import { GameReaction } from '@reaction/game-reaction';
 import { GuildEmoji, ReactionEmoji } from 'discord.js';
 import { BotAction } from '@action/bot-action';
-import { SelectAction } from '@action/actions/select-action';
+import { SelectAction } from '@action/actions';
 
 @GameReaction.Reaction
 class SelectReaction extends GameReaction {

@@ -4,6 +4,7 @@ import { BoardSize, BoardSizeVariant } from './board-size';
 import { Cell } from '@game/cell';
 import { deepClone } from '@util/deep-clone';
 import { clamp } from '@util/clamp';
+import { GameState } from '@game/game-state';
 
 export class Game extends Board {
   protected state = GameState.playing;
@@ -96,10 +97,4 @@ export class Game extends Board {
       y: clamp(0, this.size.height - 1, offset.y),
     };
   }
-}
-
-enum GameState {
-  lost,
-  won,
-  playing,
 }
