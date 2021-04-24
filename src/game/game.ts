@@ -41,6 +41,10 @@ export class Game extends Board {
     return this.state === GameState.playing;
   }
 
+  public goto(offset: Offset): void {
+    this.pos = this.clampPos(offset);
+  }
+
   public move(offset: Offset) {
     if (!this.playing) return;
 
