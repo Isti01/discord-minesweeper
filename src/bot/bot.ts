@@ -51,6 +51,7 @@ export class Bot {
 
     const state = this.states.get(channel.id);
     if (!state || !state.game || !state.gameMessage) return;
+    if (state.gameMessage.id != message.id) return;
 
     const action = this.processEmoji(emoji);
 
