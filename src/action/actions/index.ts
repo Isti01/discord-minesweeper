@@ -1,5 +1,6 @@
 export * from './display-action';
 export * from './flag-action';
+export * from './goto-action';
 export * from './message-action';
 export * from './move-action';
 export * from './new-game-action';
