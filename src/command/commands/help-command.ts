@@ -17,7 +17,9 @@ class HelpCommand extends BotCommand {
         'new - (n) creates a game with medium size\n' +
         'new (small | medium | big) - (n (small | medium | big)) creates a game with the given size\n' +
         'reveal - (r) reveals the current field\n' +
-        'reveal [coordinates] - (r [coordinates]) reveals the field at the coordinates\n'
+        'reveal [coordinates] - (r [coordinates]) reveals the field at the coordinates\n' +
+        'step - (s) changes the step size to 1\n' +
+        'step [size] - (s [size]) changes the step size between 1 and 5\n'
     );
   }
 }

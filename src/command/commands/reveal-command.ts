@@ -6,7 +6,7 @@ import { RevealAction } from '@action/actions';
 @BotCommand.Command
 class RevealCommand extends BotCommand {
   constructor() {
-    super(/^(select|s)\s*(\w\s*\d+)?\s*$/);
+    super(/^(reveal|r)\s*(\w\s*\d+)?\s*$/);
   }
 
   protected process(args: RegExpMatchArray): BotAction {

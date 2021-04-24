@@ -4,3 +4,4 @@ export * from './goto-command';
 export * from './help-command';
 export * from './new-game-command';
 export * from './reveal-command';
+export * from './step-command';
