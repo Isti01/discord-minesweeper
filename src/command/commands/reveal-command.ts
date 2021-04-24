@@ -1,10 +1,10 @@
 import { BotCommand } from '@command/bot-command';
 import { BotAction } from '@action/bot-action';
 import { resolveOffsetText } from '@game/position';
-import { SelectAction } from '@action/actions';
+import { RevealAction } from '@action/actions';
 
 @BotCommand.Command
-class SelectCommand extends BotCommand {
+class RevealCommand extends BotCommand {
   constructor() {
     super(/^(select|s)\s*(\w\s*\d+)?\s*$/);
   }
@@ -13,6 +13,6 @@ class SelectCommand extends BotCommand {
     const offsetText = args[2]?.replaceAll(' ', '');
     const offset = offsetText ? resolveOffsetText(offsetText) : undefined;
 
-    return new SelectAction(offset);
+    return new RevealAction(offset);
   }
 }

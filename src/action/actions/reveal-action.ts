@@ -4,7 +4,7 @@ import { Offset } from '@game/position';
 import { GotoAction } from '@action/actions/goto-action';
 import { NoGameAction } from '@action/actions/no-game-action';
 
-export class SelectAction extends BotAction {
+export class RevealAction extends BotAction {
   constructor(private readonly offset?: Offset) {
     super();
   }

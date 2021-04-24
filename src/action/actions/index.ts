@@ -6,6 +6,6 @@ export * from './move-action';
 export * from './new-game-action';
 export * from './no-game-action';
 export * from './noop-action';
-export * from './select-action';
+export * from './reveal-action';
 export * from './step-size-action';
 export * from './update-display-action';
