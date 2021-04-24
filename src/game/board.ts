@@ -13,7 +13,7 @@ export class Board {
     this.size = BoardSizeUtil.getBoardSize(sizeVariant);
 
     this.cells = this.generateCells();
-    this.nodesToReveal = this.cells.length - this.bombAmount;
+    this.nodesToReveal = this.size.width * this.size.height - this.bombAmount;
     this.calculateBombsAround();
   }
 
