@@ -5,7 +5,9 @@ import { GameReaction } from '@reaction/game-reaction';
 
 export class DisplayAction extends BotAction {
   private static addReactions(message: Message): Promise<any> {
-    return Promise.all(GameReaction.getEmojis().map(message.react));
+    return Promise.all(
+      GameReaction.getEmojis().map((emoji) => message.react(emoji))
+    );
   }
 
   async execute(props: BotActionProps): Promise<any> {
