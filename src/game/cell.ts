@@ -8,17 +8,17 @@ export interface Cell {
 export class CellUtil {
   public static displayCell(
     cell: Cell,
-    lost: boolean,
+    playing: boolean,
     selected?: boolean
   ): string {
-    if (lost && cell.bomb) {
+    if (!playing && cell.bomb) {
       return '¤';
     }
-    if (!lost && selected) {
-      return '×';
+    if (playing && selected) {
+      return '≡';
     }
     if (cell.flagged) {
-      return '¡';
+      return '×';
     }
     if (!cell.revealed) {
       return '■';
@@ -44,7 +44,7 @@ export class CellUtil {
       case 8:
         return '8';
       default:
-        return '0';
+        return ' ';
     }
   }
 }

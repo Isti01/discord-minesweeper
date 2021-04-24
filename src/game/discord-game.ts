@@ -19,7 +19,7 @@ export class DiscordGame extends Game {
     const displayRow = (y: number) => (cell: Cell, x: number) => {
       return CellUtil.displayCell(
         cell,
-        this.lost,
+        this.playing,
         this.pos.x == x && this.pos.y == y
       );
     };
@@ -27,7 +27,7 @@ export class DiscordGame extends Game {
   }
 
   private get cellAtPosition(): string {
-    return CellUtil.displayCell(this.getNode(this.pos) as Cell, this.lost);
+    return CellUtil.displayCell(this.getNode(this.pos) as Cell, this.playing);
   }
 
   public getGameEmbed(stepSize: number): MessageEmbed {
