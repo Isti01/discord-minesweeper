@@ -17,13 +17,17 @@ export class DiscordGame extends Game {
       `${padIndex(y, padding)}║ ` + row.map(displayRow(y)).join(' ');
 
     const displayRow = (y: number) => (cell: Cell, x: number) => {
-      return CellUtil.displayCell(cell, this.pos.x == x && this.pos.y == y);
+      return CellUtil.displayCell(
+        cell,
+        this.lost,
+        this.pos.x == x && this.pos.y == y
+      );
     };
     return this.getHeader(padding) + this.cells.map(displayCols).join('\n');
   }
 
   private get cellAtPosition(): string {
-    return CellUtil.displayCell(this.getNode(this.pos) as Cell);
+    return CellUtil.displayCell(this.getNode(this.pos) as Cell, this.lost);
   }
 
   public getGameEmbed(stepSize: number): MessageEmbed {

@@ -6,8 +6,15 @@ export interface Cell {
 }
 
 export class CellUtil {
-  public static displayCell(cell: Cell, selected?: boolean): string {
-    if (selected) {
+  public static displayCell(
+    cell: Cell,
+    lost: boolean,
+    selected?: boolean
+  ): string {
+    if (lost && cell.bomb) {
+      return '¤';
+    }
+    if (!lost && selected) {
       return '×';
     }
     if (cell.flagged) {
