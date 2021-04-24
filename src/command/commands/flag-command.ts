@@ -1,18 +1,18 @@
 import { BotCommand } from '@command/bot-command';
 import { BotAction } from '@action/bot-action';
 import { resolveOffsetText } from '@game/position';
-import { SelectAction } from '@action/actions';
+import { FlagAction } from '@action/actions';
 
 @BotCommand.Command
-class SelectCommand extends BotCommand {
+export class FlagCommand extends BotCommand {
   constructor() {
-    super(/^select\s*(\w\s*\d+)?\s*$/);
+    super(/^flag\s*(\w\s*\d+)?\s*$/);
   }
 
   protected process(args: RegExpMatchArray): BotAction {
     const offsetText = args[1].replaceAll(' ', '');
     const offset = offsetText ? resolveOffsetText(offsetText) : undefined;
 
-    return new SelectAction(offset);
+    return new FlagAction(offset);
   }
 }
