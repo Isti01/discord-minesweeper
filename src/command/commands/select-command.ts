@@ -6,11 +6,11 @@ import { SelectAction } from '@action/actions';
 @BotCommand.Command
 class SelectCommand extends BotCommand {
   constructor() {
-    super(/^select\s*(\w\s*\d+)?\s*$/);
+    super(/^(select|s)\s*(\w\s*\d+)?\s*$/);
   }
 
   protected process(args: RegExpMatchArray): BotAction {
-    const offsetText = args[1].replaceAll(' ', '');
+    const offsetText = args[2]?.replaceAll(' ', '');
     const offset = offsetText ? resolveOffsetText(offsetText) : undefined;
 
     return new SelectAction(offset);

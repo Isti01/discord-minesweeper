@@ -1,10 +1,10 @@
 import { BotCommand } from '../index';
-import { DisplayAction, BotAction } from '@action/index';
+import { BotAction, DisplayAction } from '@action/index';
 
 @BotCommand.Command
 class DisplayCommand extends BotCommand {
   constructor() {
-    super(/show\s*/);
+    super(/(display|d)\s*/);
   }
 
   protected process(args: RegExpMatchArray): BotAction {

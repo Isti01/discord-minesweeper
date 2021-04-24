@@ -4,7 +4,7 @@ import { BotAction, MessageAction } from '@action/index';
 @BotCommand.Command
 class HelpCommand extends BotCommand {
   constructor() {
-    super(/^help\s*$/);
+    super(/^(help|h)\s*$/);
   }
 
   protected process(args: RegExpMatchArray): BotAction {

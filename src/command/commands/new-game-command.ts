@@ -7,7 +7,7 @@ const defaultSize = BoardSizeVariant.medium;
 @BotCommand.Command
 class NewGameCommand extends BotCommand {
   constructor() {
-    super(/^new\s*$|^new\s*(small|medium|big)\s*$/);
+    super(/^(new|n)\s*(small|medium|big)?\s*$/);
   }
 
   private static getBoardSize(size: string | undefined): BoardSizeVariant {
@@ -24,6 +24,6 @@ class NewGameCommand extends BotCommand {
   }
 
   protected process(args: RegExpMatchArray): BotAction {
-    return new NewGameAction(NewGameCommand.getBoardSize(args[1]));
+    return new NewGameAction(NewGameCommand.getBoardSize(args[2]));
   }
 }

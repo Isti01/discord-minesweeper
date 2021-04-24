@@ -6,10 +6,10 @@ import { GotoAction } from '@action/actions';
 @BotCommand.Command
 class GotoCommand extends BotCommand {
   public constructor() {
-    super(/^goto\s*(\w\d+)\s*$/);
+    super(/^(goto|g)\s*(\w\d+)\s*$/);
   }
 
   protected process(args: RegExpMatchArray): BotAction {
-    return new GotoAction(resolveOffsetText(args[1]), true);
+    return new GotoAction(resolveOffsetText(args[2]), true);
   }
 }

@@ -1,6 +1,5 @@
 import { Game } from '@game/game';
 import { Cell, CellUtil } from '@game/cell';
-import { MessageEmbed } from 'discord.js';
 import { GameState } from '@game/game-state';
 
 const abc = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -30,11 +29,10 @@ export class DiscordGame extends Game {
     return CellUtil.displayCell(this.getNode(this.pos) as Cell, this.playing);
   }
 
-  public getGameEmbed(stepSize: number): MessageEmbed {
-    return new MessageEmbed({
-      description:
-        '```\n' + this.getTitle(stepSize) + '\n\n' + this.boardText + '\n```',
-    });
+  public getGameEmbedText(stepSize: number): string {
+    return (
+      '```\n' + this.getTitle(stepSize) + '\n\n' + this.boardText + '\n```'
+    );
   }
 
   private getTitle(stepSize: number): string {

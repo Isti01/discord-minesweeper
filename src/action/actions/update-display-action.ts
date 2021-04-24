@@ -5,6 +5,6 @@ export class UpdateDisplayAction extends BotAction {
     const { game, gameMessage } = state;
     if (!game || !gameMessage) return;
 
-    return gameMessage.edit(game.getGameEmbed(state.stepSize));
+    return this.editMessage(game.getGameEmbedText(state.stepSize), gameMessage);
   }
 }
