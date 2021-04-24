@@ -18,7 +18,9 @@ export class DisplayAction extends BotAction {
     game = props.state.game as DiscordGame;
 
     await props.state.gameMessage?.delete().catch(console.log);
-    const message = await props.channel.send(game.gameEmbed);
+    const message = await props.channel.send(
+      game.getGameEmbed(props.state.stepSize)
+    );
 
     props.state.gameMessage = message;
     await DisplayAction.addReactions(message);
