@@ -9,7 +9,6 @@ class PrefixCommand extends BotCommand {
   }
 
   protected process(args: RegExpMatchArray): BotAction {
-    console.log(args);
     return new PrefixAction(args[2]);
   }
 }

@@ -13,25 +13,35 @@ import { botCommands } from '@command/index';
 import { BotAction, MessageAction, NoopAction } from '@action/index';
 import { GameReaction } from '@reaction/index';
 import '@command/commands'; // To create the command classes and run the decorators
-import '@reaction/reactions'; // To create the reaction classes and run the decorators
+import '@reaction/reactions';
+import { deepClone } from '@util/deep-clone';
+import { BotPersistence } from '@bot/bot-persistence'; // To create the reaction classes and run the decorators
 
 const defaultPrefix = '$';
 
 export class Bot {
-  protected login: Promise<any>;
   protected readonly bot = new Client();
-  protected states = new Map<string, ChannelState>();
+  protected readonly state = new BotPersistence('./channel-states');
 
   public constructor(token?: string) {
     this.listen();
-    this.login = this.bot.login(token).then(() => console.log('Logged In'));
+    this.init(token).then(() =>
+      console.log('The bot initialized successfully')
+    );
+  }
+
+  async init(token?: string) {
+    await this.state.init();
+    console.log('Loaded previous states');
+
+    await this.bot.login(token);
   }
 
   protected async onMessage({ content, channel, author }: Message) {
     if (author.id === this.bot.user?.id || !(channel instanceof TextChannel))
       return;
 
-    const prefix = this.states.get(channel.id)?.prefix || defaultPrefix;
+    const prefix = this.state.get(channel.id)?.prefix || defaultPrefix;
     if (!content.startsWith(prefix)) return;
 
     const command = content.substr(prefix.length).toLowerCase();
@@ -49,7 +59,7 @@ export class Bot {
     const channel = message.channel;
     if (!(channel instanceof TextChannel) || !(author instanceof User)) return;
 
-    const state = this.states.get(channel.id);
+    const state = this.state.get(channel.id);
     if (!state || !state.game || !state.gameMessage) return;
     if (state.gameMessage.id != message.id) return;
 
@@ -78,18 +88,22 @@ export class Bot {
     return new NoopAction();
   }
 
-  protected processAction(
+  protected async processAction(
     action: BotAction,
     channel: TextChannel,
     author: User
   ) {
-    let state: ChannelState | undefined = this.states.get(channel.id);
+    let state: ChannelState | undefined = this.state.get(channel.id);
     if (state === undefined) {
       state = { stepSize: 1 };
-      this.states.set(channel.id, state);
+      this.state.set(channel.id, state);
     }
 
-    return action.execute({ channel, author, state });
+    const oldState = deepClone(state);
+
+    await action.execute({ channel, author, state });
+
+    return this.state.updateIfChanged(oldState, channel.id);
   }
 
   protected processCommand(commandText: string): BotAction {
