@@ -16,6 +16,7 @@ class HelpCommand extends BotCommand {
         'help - (h) helps you out with the commands\n' +
         'new - (n) creates a game with medium size\n' +
         'new (small | medium | big) - (n (small | medium | big)) creates a game with the given size\n' +
+        'prefix [prefix] - (p [prefix]) sets your prefix\n' +
         'reveal - (r) reveals the current field\n' +
         'reveal [coordinates] - (r [coordinates]) reveals the field at the coordinates\n' +
         'step - (s) changes the step size to 1\n' +

@@ -1,8 +1,6 @@
 import { Board } from './board';
 import { Offset, Position } from './position';
-import { BoardSize, BoardSizeVariant } from './board-size';
-import { Cell } from '@game/cell';
-import { deepClone } from '@util/deep-clone';
+import { BoardSizeVariant } from './board-size';
 import { clamp } from '@util/clamp';
 import { GameState } from '@game/game-state';
 
@@ -17,24 +15,8 @@ export class Game extends Board {
     super(size);
   }
 
-  public get boardSize(): BoardSize {
-    return { ...this.size };
-  }
-
-  public get board(): Cell[][] {
-    return deepClone(this.cells);
-  }
-
   public get position(): Position {
     return { ...this.pos };
-  }
-
-  public get won(): boolean {
-    return this.state === GameState.won;
-  }
-
-  public get lost(): boolean {
-    return this.state === GameState.lost;
   }
 
   public get playing(): boolean {
