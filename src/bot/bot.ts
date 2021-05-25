@@ -13,9 +13,9 @@ import { botCommands } from '@command/index';
 import { BotAction, MessageAction, NoopAction } from '@action/index';
 import { GameReaction } from '@reaction/index';
 import '@command/commands'; // To create the command classes and run the decorators
-import '@reaction/reactions';
+import '@reaction/reactions'; // To create the reaction classes and run the decorators
 import { deepClone } from '@util/deep-clone';
-import { BotPersistence } from '@bot/bot-persistence'; // To create the reaction classes and run the decorators
+import { BotPersistence } from '@bot/bot-persistence';
 
 const defaultPrefix = '$';
 
